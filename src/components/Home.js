@@ -1,11 +1,17 @@
 import React, { useState } from 'react'
 import './homeStyles.css'
-import { WebcamCapture} from './Webcam'
+import { WebcamCapture } from './Webcam'
 import { create } from 'ipfs-http-client'
+import { supabase } from '../supabaseClient'
 
 const client = create('https://ipfs.infura.io:5001/api/v0')
 
 const Home = () => {
+
+  const user = supabase.auth.user()
+  if (!user) {
+    window.location = "/login";
+  }
 
   const [file, setFile] = useState(null);
   const [urlArr, setUrlArr] = useState([]);
@@ -36,29 +42,29 @@ const Home = () => {
 
   // const [file, setFile] =  useState('');
   const submitForm = () => {
-      alert("Form submitted");
+    alert("Form submitted");
   }
 
   return (
-      <div className="home-container">
-          <div className="container">
-              <div className="text">
-                  <h1>Fill up this form!</h1>
-                  <form className="form" onSubmit={handleSubmit}>
-                      <WebcamCapture/>
-                      Aadhar Card Image:<input type="file" />
-                      Pan Card Image:<input type="file" />
-                      {/* <input type="file" /> */}
-                      <button type="submit" className="button">Submit</button>
-                  </form>
-              </div>
-              <div className="display">
-        {urlArr.length !== 0
-          ? urlArr.map((el) => <img src={el} alt="nfts" />)
-          : <h3>Upload data</h3>}
+    <div className="home-container">
+      <div className="container">
+        <div className="text">
+          <h1>Fill up this form!</h1>
+          <form className="form" onSubmit={handleSubmit}>
+            <WebcamCapture />
+            Aadhar Card Image:<input type="file" />
+            Pan Card Image:<input type="file" />
+            {/* <input type="file" /> */}
+            <button type="submit" className="button">Submit</button>
+          </form>
+        </div>
+        <div className="display">
+          {urlArr.length !== 0
+            ? urlArr.map((el) => <img src={el} alt="nfts" />)
+            : <h3>Upload data</h3>}
+        </div>
       </div>
-          </div>
-      </div>
+    </div>
   )
 }
 export default Home
