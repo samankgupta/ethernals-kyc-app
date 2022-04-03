@@ -21,7 +21,11 @@ function Register() {
         }
       }
     )
-    if (user) {
+    if (error) {
+      toast.error(error.message, {
+        theme: "dark"
+      })
+    } else if (user) {
       document.getElementById("signupform").reset();
       toast.success("Sign up successful!", {
         theme: "dark"

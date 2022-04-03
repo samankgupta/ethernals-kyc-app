@@ -15,7 +15,11 @@ function Login() {
         password: password,
       }
     )
-    if (user) {
+    if (error) {
+      toast.error(error.message, {
+        theme: "dark"
+      })
+    } else if (user) {
       document.getElementById("signinform").reset();
       toast.success("Sign In successful!", {
         theme: "dark"
