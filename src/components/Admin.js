@@ -73,20 +73,24 @@ function Admin() {
         theme: "dark"
       })
     } else if (user) {
+      let isAdminSignedIn = false
       const { data, error } = await supabase
         .from('Admin')
         .select()
       for (let i = 0; i < data.length; i++) {
         if (data[i].email === user.email && data[i].name === user.user_metadata.name) {
-          setIsAdmin(true)
+          isAdminSignedIn = true
           break;
         }
       }
-      if (isAdmin) {
+      if (isAdminSignedIn) {
         document.getElementById("signinform").reset();
         toast.success("Sign In successful!", {
           theme: "dark"
         })
+        setTimeout(() => {
+          setIsAdmin(true)
+        }, 3000)
       }
       else {
         toast.error("You are not an admin!", {
