@@ -26,10 +26,18 @@ function Register() {
         theme: "dark"
       })
     } else if (user) {
+      const { data, error } = await supabase
+        .from('User')
+        .insert([
+          { email: user.email, name: user.user_metadata.name, isVerified: false, cid: '' }
+        ])
       document.getElementById("signupform").reset();
       toast.success("Sign up successful!", {
         theme: "dark"
       })
+      setTimeout(() => {
+        window.location = "/";
+      }, 3000)
     }
   }
 
